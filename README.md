@@ -16,6 +16,17 @@ Clone this repository to the Ingres client machine.
 ```
 git clone https:/github.com/quelgeek/tpyc_c_db.git tpyc_c_db
 ```
+The following daat files are provided:
+* **customer.data** 210MiB  
+* **delivery.data** (empty) 
+* **district.data** 16KiB 
+* **history.data** 47MiB  
+* **item.data** 11MiB     
+* **new_order.data** 3.7MiB
+* **order.data** 44MiB    
+* **order_line.data** 558MiB
+* **stock.data** 405MiB    
+* **warehouse.data** 1.4KiB
 
 On the Ingres host, create a database with whatever name you prefer
 (for example *tpcc_db*).
@@ -36,5 +47,5 @@ sql myvnode::tpcc_db < copy.in > copy.in.log
 After successfully loading the database and before using it, take a checkpoint so that it can quickly be restored to its initial state after a test run.
 (There is no need to enable journaling unless the test is actually intended to determine the impact of journaling.) Run the checkpoint on the Ingres host.
 ```
-ckpdb -l tpcc_db
+ckpdb -l -w tpcc_db
 ```
