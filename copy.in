@@ -1,0 +1,603 @@
+
+/* SQL script created by COPYDB, version II 10.1.0 (a64.lnx/125)GPL. */
+
+\sql
+set autocommit on
+\p\g
+set nojournaling
+\p\g
+\sql
+set session with privileges=all
+\p\g
+set decimal '.'
+\p\g
+set date_format 'us'
+\p\g
+set money_format 'L:$'
+\p\g
+set money_prec '2'
+\p\g
+set nocreate_compression
+\p\g
+
+	/* TABLES */
+\nocontinue
+create table customer(
+	warehouse integer not null,
+	district integer not null,
+	customer integer not null,
+	discount float,
+	credit char(2),
+	last varchar(16),
+	first varchar(16),
+	credit_lim money,
+	balance money,
+	ytd_payment money,
+	payment_cnt integer,
+	delivery_cnt integer,
+	street_1 varchar(20),
+	street_2 varchar(20),
+	city varchar(20),
+	state char(2),
+	zip char(9),
+	phone char(16),
+	since ingresdate,
+	middle char(2),
+	data varchar(500)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify customer to isam unique on
+	warehouse,
+	district,
+	customer
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy customer(
+	warehouse= c0tab,
+	district= c0tab,
+	customer= c0tab,
+	discount= c0tab with null(']^NULL^['),
+	credit= varchar(0)tab with null(']^NULL^['),
+	last= varchar(0)tab with null(']^NULL^['),
+	first= varchar(0)tab with null(']^NULL^['),
+	credit_lim= c0tab with null(']^NULL^['),
+	balance= c0tab with null(']^NULL^['),
+	ytd_payment= c0tab with null(']^NULL^['),
+	payment_cnt= c0tab with null(']^NULL^['),
+	delivery_cnt= c0tab with null(']^NULL^['),
+	street_1= varchar(0)tab with null(']^NULL^['),
+	street_2= varchar(0)tab with null(']^NULL^['),
+	city= varchar(0)tab with null(']^NULL^['),
+	state= varchar(0)tab with null(']^NULL^['),
+	zip= varchar(0)tab with null(']^NULL^['),
+	phone= varchar(0)tab with null(']^NULL^['),
+	since= c0tab with null(']^NULL^['),
+	middle= varchar(0)tab with null(']^NULL^['),
+	data= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/customer.data'
+with allocation = 4,
+	row_estimate = 300000
+\p\g
+create table delivery(
+	warehouse integer not null,
+	district integer not null,
+	"order" integer not null,
+	ol_number integer not null
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify delivery to heap
+with extend = 16,
+	allocation = 4,
+	page_size = 8192
+\p\g
+copy delivery(
+	warehouse= c0tab,
+	district= c0tab,
+	"order"= c0tab,
+	ol_number= c0nl)
+from '/var/tmp/copydb/tpccdb/delivery.data'
+with row_estimate = 0
+\p\g
+create table district(
+	warehouse integer not null,
+	district integer not null,
+	ytd money,
+	tax float,
+	next_o_id integer,
+	name varchar(10),
+	street_1 varchar(20),
+	street_2 varchar(20),
+	city varchar(20),
+	state char(2),
+	zip char(9)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify district to hash unique on
+	warehouse,
+	district
+with fillfactor = 50,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy district(
+	warehouse= c0tab,
+	district= c0tab,
+	ytd= c0tab with null(']^NULL^['),
+	tax= c0tab with null(']^NULL^['),
+	next_o_id= c0tab with null(']^NULL^['),
+	name= varchar(0)tab with null(']^NULL^['),
+	street_1= varchar(0)tab with null(']^NULL^['),
+	street_2= varchar(0)tab with null(']^NULL^['),
+	city= varchar(0)tab with null(']^NULL^['),
+	state= varchar(0)tab with null(']^NULL^['),
+	zip= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/district.data'
+with minpages = 100,
+	allocation = 4,
+	row_estimate = 100
+\p\g
+create table history(
+	customer integer,
+	customer_district integer,
+	customer_warehouse integer,
+	district integer,
+	warehouse integer,
+	date ingresdate,
+	amount money,
+	data varchar(24)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify history to isam on
+	customer,
+	customer_district,
+	customer_warehouse,
+	date
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192
+\p\g
+copy history(
+	customer= c0tab with null(']^NULL^['),
+	customer_district= c0tab with null(']^NULL^['),
+	customer_warehouse= c0tab with null(']^NULL^['),
+	district= c0tab with null(']^NULL^['),
+	warehouse= c0tab with null(']^NULL^['),
+	date= c0tab with null(']^NULL^['),
+	amount= c0tab with null(']^NULL^['),
+	data= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/history.data'
+with allocation = 4,
+	row_estimate = 300000
+\p\g
+create table item(
+	item integer not null,
+	name varchar(24),
+	price money,
+	data varchar(50),
+	im_id integer
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify item to isam unique on
+	item
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy item(
+	item= c0tab,
+	name= varchar(0)tab with null(']^NULL^['),
+	price= c0tab with null(']^NULL^['),
+	data= varchar(0)tab with null(']^NULL^['),
+	im_id= c0nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/item.data'
+with allocation = 4,
+	row_estimate = 100000
+\p\g
+create table new_order(
+	warehouse integer not null,
+	district integer not null,
+	"order" integer not null
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify new_order to isam unique on
+	warehouse,
+	district,
+	"order"
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy new_order(
+	warehouse= c0tab,
+	district= c0tab,
+	"order"= c0nl)
+from '/var/tmp/copydb/tpccdb/new_order.data'
+with allocation = 4,
+	row_estimate = 90000
+\p\g
+create table "order"(
+	warehouse integer not null,
+	district integer not null,
+	"order" integer not null,
+	customer integer,
+	carrier_id integer,
+	ol_cnt integer,
+	all_local integer,
+	entry_d ingresdate
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify "order" to isam unique on
+	warehouse,
+	district,
+	"order"
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy "order"(
+	warehouse= c0tab,
+	district= c0tab,
+	"order"= c0tab,
+	customer= c0tab with null(']^NULL^['),
+	carrier_id= c0tab with null(']^NULL^['),
+	ol_cnt= c0tab with null(']^NULL^['),
+	all_local= c0tab with null(']^NULL^['),
+	entry_d= c0nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/order.data'
+with allocation = 4,
+	row_estimate = 300000
+\p\g
+create table order_line(
+	warehouse integer not null,
+	district integer not null,
+	"order" integer not null,
+	ol_number integer not null,
+	item integer not null,
+	delivery_d ingresdate,
+	amount money,
+	supply_warehouse integer,
+	quantity integer,
+	dist_info char(24)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify order_line to isam unique on
+	warehouse,
+	district,
+	"order",
+	ol_number
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy order_line(
+	warehouse= c0tab,
+	district= c0tab,
+	"order"= c0tab,
+	ol_number= c0tab,
+	item= c0tab,
+	delivery_d= c0tab with null(']^NULL^['),
+	amount= c0tab with null(']^NULL^['),
+	supply_warehouse= c0tab with null(']^NULL^['),
+	quantity= c0tab with null(']^NULL^['),
+	dist_info= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/order_line.data'
+with allocation = 4,
+	row_estimate = 2997128
+\p\g
+create table stock(
+	warehouse integer not null,
+	item integer not null,
+	quantity integer,
+	ytd money,
+	order_cnt integer,
+	remote_cnt integer,
+	data varchar(50),
+	dist_01 char(24),
+	dist_02 char(24),
+	dist_03 char(24),
+	dist_04 char(24),
+	dist_05 char(24),
+	dist_06 char(24),
+	dist_07 char(24),
+	dist_08 char(24),
+	dist_09 char(24),
+	dist_10 char(24)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify stock to isam unique on
+	warehouse,
+	item
+with fillfactor = 80,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy stock(
+	warehouse= c0tab,
+	item= c0tab,
+	quantity= c0tab with null(']^NULL^['),
+	ytd= c0tab with null(']^NULL^['),
+	order_cnt= c0tab with null(']^NULL^['),
+	remote_cnt= c0tab with null(']^NULL^['),
+	data= varchar(0)tab with null(']^NULL^['),
+	dist_01= varchar(0)tab with null(']^NULL^['),
+	dist_02= varchar(0)tab with null(']^NULL^['),
+	dist_03= varchar(0)tab with null(']^NULL^['),
+	dist_04= varchar(0)tab with null(']^NULL^['),
+	dist_05= varchar(0)tab with null(']^NULL^['),
+	dist_06= varchar(0)tab with null(']^NULL^['),
+	dist_07= varchar(0)tab with null(']^NULL^['),
+	dist_08= varchar(0)tab with null(']^NULL^['),
+	dist_09= varchar(0)tab with null(']^NULL^['),
+	dist_10= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/stock.data'
+with allocation = 4,
+	row_estimate = 1000000
+\p\g
+create table warehouse(
+	warehouse integer not null,
+	ytd money,
+	tax float,
+	name varchar(10),
+	street_1 varchar(20),
+	street_2 varchar(20),
+	city varchar(20),
+	state char(2),
+	zip char(9)
+)
+with noduplicates,
+nojournaling,
+page_size = 8192,
+location = (ii_database),
+security_audit=(table,norow)
+\p\g
+modify warehouse to hash unique on
+	warehouse
+with fillfactor = 50,
+	extend = 16,
+	page_size = 8192,
+	unique_scope = statement
+\p\g
+copy warehouse(
+	warehouse= c0tab,
+	ytd= c0tab with null(']^NULL^['),
+	tax= c0tab with null(']^NULL^['),
+	name= varchar(0)tab with null(']^NULL^['),
+	street_1= varchar(0)tab with null(']^NULL^['),
+	street_2= varchar(0)tab with null(']^NULL^['),
+	city= varchar(0)tab with null(']^NULL^['),
+	state= varchar(0)tab with null(']^NULL^['),
+	zip= varchar(0)nl with null(']^NULL^['))
+from '/var/tmp/copydb/tpccdb/warehouse.data'
+with minpages = 100,
+	allocation = 4,
+	row_estimate = 10
+\p\g
+
+	/* INDEXES */
+create index custiddex on customer (
+	customer,
+	warehouse,
+	district,
+	last,
+	credit,
+	discount)
+with structure = isam,
+	page_size = 8192,
+	nocompression,
+	key = (customer, warehouse),
+	persistence,
+	fillfactor = 80,
+	location = (ii_database)
+\p\g
+create index custnamedex on customer (
+	last,
+	district,
+	warehouse)
+with structure = isam,
+	page_size = 8192,
+	nocompression,
+	key = (last),
+	persistence,
+	fillfactor = 80,
+	location = (ii_database)
+\p\g
+
+	/* PERMISSIONS */
+grant select on "ingres".new_order to public
+\p\g
+grant update on "ingres".new_order to public
+\p\g
+grant delete on "ingres".new_order to public
+\p\g
+grant insert on "ingres".new_order to public
+\p\g
+grant references on "ingres".new_order to public
+\p\g
+grant copy_into on "ingres".new_order to public
+\p\g
+grant copy_from on "ingres".new_order to public
+\p\g
+grant select on "ingres".item to public
+\p\g
+grant update on "ingres".item to public
+\p\g
+grant delete on "ingres".item to public
+\p\g
+grant insert on "ingres".item to public
+\p\g
+grant references on "ingres".item to public
+\p\g
+grant copy_into on "ingres".item to public
+\p\g
+grant copy_from on "ingres".item to public
+\p\g
+grant select on "ingres".district to public
+\p\g
+grant update on "ingres".district to public
+\p\g
+grant delete on "ingres".district to public
+\p\g
+grant insert on "ingres".district to public
+\p\g
+grant references on "ingres".district to public
+\p\g
+grant copy_into on "ingres".district to public
+\p\g
+grant copy_from on "ingres".district to public
+\p\g
+grant select on "ingres".customer to public
+\p\g
+grant update on "ingres".customer to public
+\p\g
+grant delete on "ingres".customer to public
+\p\g
+grant insert on "ingres".customer to public
+\p\g
+grant references on "ingres".customer to public
+\p\g
+grant copy_into on "ingres".customer to public
+\p\g
+grant copy_from on "ingres".customer to public
+\p\g
+grant select on "ingres".order_line to public
+\p\g
+grant update on "ingres".order_line to public
+\p\g
+grant delete on "ingres".order_line to public
+\p\g
+grant insert on "ingres".order_line to public
+\p\g
+grant references on "ingres".order_line to public
+\p\g
+grant copy_into on "ingres".order_line to public
+\p\g
+grant copy_from on "ingres".order_line to public
+\p\g
+grant select on "ingres".history to public
+\p\g
+grant update on "ingres".history to public
+\p\g
+grant delete on "ingres".history to public
+\p\g
+grant insert on "ingres".history to public
+\p\g
+grant references on "ingres".history to public
+\p\g
+grant copy_into on "ingres".history to public
+\p\g
+grant copy_from on "ingres".history to public
+\p\g
+grant select on "ingres".warehouse to public
+\p\g
+grant update on "ingres".warehouse to public
+\p\g
+grant delete on "ingres".warehouse to public
+\p\g
+grant insert on "ingres".warehouse to public
+\p\g
+grant references on "ingres".warehouse to public
+\p\g
+grant copy_into on "ingres".warehouse to public
+\p\g
+grant copy_from on "ingres".warehouse to public
+\p\g
+grant select on "ingres".stock to public
+\p\g
+grant update on "ingres".stock to public
+\p\g
+grant delete on "ingres".stock to public
+\p\g
+grant insert on "ingres".stock to public
+\p\g
+grant references on "ingres".stock to public
+\p\g
+grant copy_into on "ingres".stock to public
+\p\g
+grant copy_from on "ingres".stock to public
+\p\g
+grant select on "ingres".order to public
+\p\g
+grant update on "ingres".order to public
+\p\g
+grant delete on "ingres".order to public
+\p\g
+grant insert on "ingres".order to public
+\p\g
+grant references on "ingres".order to public
+\p\g
+grant copy_into on "ingres".order to public
+\p\g
+grant copy_from on "ingres".order to public
+\p\g
+
+	/* CONSTRAINTS */
+alter table customer add constraint pk_customer  PRIMARY KEY(warehouse, district, customer) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table new_order add constraint pk_new_order  PRIMARY KEY(warehouse, district, order) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table "order" add constraint pk_order  PRIMARY KEY(warehouse, district, order) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table warehouse add constraint pk_warehouse  PRIMARY KEY(warehouse) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table stock add constraint pk_stock  PRIMARY KEY(warehouse, item) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table order_line add constraint pk_order_line  PRIMARY KEY(warehouse, district, order, ol_number) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table item add constraint pk_item  PRIMARY KEY(item) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
+alter table district add constraint pk_district  PRIMARY KEY(warehouse, district) WITH (INDEX = BASE TABLE STRUCTURE)
+\p\g
