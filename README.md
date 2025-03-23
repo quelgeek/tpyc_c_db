@@ -27,3 +27,10 @@ If the client is a different machine use the vnode to load the data.
 ```
 cd tpyc_c_db
 sql myvnode::tpyccdb < copy.in > copy.in.log
+```
+# Note
+After successfully loading the database and before using it, take a checkpoint so that it can quickly be restored to its initial state after a test run.
+(There is no need to enable journaling unless the test is actually intended to determine the impact of journaling.) Run the checkpoint on the Ingres host.
+```
+ckpdb -l tpyccdb
+```
