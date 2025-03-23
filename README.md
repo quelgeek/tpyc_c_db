@@ -16,7 +16,7 @@ Clone this repository to the Ingres client machine.
 ```
 git clone https:/github.com/quelgeek/tpyc_c_db.git tpyc_c_db
 ```
-The following daat files are provided:
+The following data files are provided:
 * **customer.data** 210MiB  
 * **delivery.data** (empty) 
 * **district.data** 16KiB 
