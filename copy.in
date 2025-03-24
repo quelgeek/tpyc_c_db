@@ -1,6 +1,3 @@
-
-/* SQL script created by COPYDB, version II 10.1.0 (a64.lnx/125)GPL. */
-
 \sql
 set autocommit on
 \p\g
