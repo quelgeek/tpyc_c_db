@@ -82,7 +82,7 @@ copy customer(
 	since= c0tab with null(']^NULL^['),
 	middle= varchar(0)tab with null(']^NULL^['),
 	data= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/customer.data'
+from 'customer.data'
 with allocation = 4,
 	row_estimate = 300000
 \p\g
@@ -108,7 +108,7 @@ copy delivery(
 	district= c0tab,
 	"order"= c0tab,
 	ol_number= c0nl)
-from '/var/tmp/copydb/tpccdb/delivery.data'
+from 'delivery.data'
 with row_estimate = 0
 \p\g
 create table district(
@@ -150,7 +150,7 @@ copy district(
 	city= varchar(0)tab with null(']^NULL^['),
 	state= varchar(0)tab with null(']^NULL^['),
 	zip= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/district.data'
+from 'district.data'
 with minpages = 100,
 	allocation = 4,
 	row_estimate = 100
@@ -189,7 +189,7 @@ copy history(
 	date= c0tab with null(']^NULL^['),
 	amount= c0tab with null(']^NULL^['),
 	data= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/history.data'
+from 'history.data'
 with allocation = 4,
 	row_estimate = 300000
 \p\g
@@ -219,7 +219,7 @@ copy item(
 	price= c0tab with null(']^NULL^['),
 	data= varchar(0)tab with null(']^NULL^['),
 	im_id= c0nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/item.data'
+from 'item.data'
 with allocation = 4,
 	row_estimate = 100000
 \p\g
@@ -247,7 +247,7 @@ copy new_order(
 	warehouse= c0tab,
 	district= c0tab,
 	"order"= c0nl)
-from '/var/tmp/copydb/tpccdb/new_order.data'
+from 'new_order.data'
 with allocation = 4,
 	row_estimate = 90000
 \p\g
@@ -285,7 +285,7 @@ copy "order"(
 	ol_cnt= c0tab with null(']^NULL^['),
 	all_local= c0tab with null(']^NULL^['),
 	entry_d= c0nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/order.data'
+from 'order.data'
 with allocation = 4,
 	row_estimate = 300000
 \p\g
@@ -328,7 +328,7 @@ copy order_line(
 	supply_warehouse= c0tab with null(']^NULL^['),
 	quantity= c0tab with null(']^NULL^['),
 	dist_info= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/order_line.data'
+from 'order_line.data'
 with allocation = 4,
 	row_estimate = 2997128
 \p\g
@@ -383,7 +383,7 @@ copy stock(
 	dist_08= varchar(0)tab with null(']^NULL^['),
 	dist_09= varchar(0)tab with null(']^NULL^['),
 	dist_10= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/stock.data'
+from 'stock.data'
 with allocation = 4,
 	row_estimate = 1000000
 \p\g
@@ -421,7 +421,7 @@ copy warehouse(
 	city= varchar(0)tab with null(']^NULL^['),
 	state= varchar(0)tab with null(']^NULL^['),
 	zip= varchar(0)nl with null(']^NULL^['))
-from '/var/tmp/copydb/tpccdb/warehouse.data'
+from 'warehouse.data'
 with minpages = 100,
 	allocation = 4,
 	row_estimate = 10
