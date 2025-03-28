@@ -457,131 +457,131 @@ with structure = isam,
 \p\g
 
 	/* PERMISSIONS */
-grant select on "ingres".new_order to public
+grant select on new_order to public
 \p\g
-grant update on "ingres".new_order to public
+grant update on new_order to public
 \p\g
-grant delete on "ingres".new_order to public
+grant delete on new_order to public
 \p\g
-grant insert on "ingres".new_order to public
+grant insert on new_order to public
 \p\g
-grant references on "ingres".new_order to public
+grant references on new_order to public
 \p\g
-grant copy_into on "ingres".new_order to public
+grant copy_into on new_order to public
 \p\g
-grant copy_from on "ingres".new_order to public
+grant copy_from on new_order to public
 \p\g
-grant select on "ingres".item to public
+grant select on item to public
 \p\g
-grant update on "ingres".item to public
+grant update on item to public
 \p\g
-grant delete on "ingres".item to public
+grant delete on item to public
 \p\g
-grant insert on "ingres".item to public
+grant insert on item to public
 \p\g
-grant references on "ingres".item to public
+grant references on item to public
 \p\g
-grant copy_into on "ingres".item to public
+grant copy_into on item to public
 \p\g
-grant copy_from on "ingres".item to public
+grant copy_from on item to public
 \p\g
-grant select on "ingres".district to public
+grant select on district to public
 \p\g
-grant update on "ingres".district to public
+grant update on district to public
 \p\g
-grant delete on "ingres".district to public
+grant delete on district to public
 \p\g
-grant insert on "ingres".district to public
+grant insert on district to public
 \p\g
-grant references on "ingres".district to public
+grant references on district to public
 \p\g
-grant copy_into on "ingres".district to public
+grant copy_into on district to public
 \p\g
-grant copy_from on "ingres".district to public
+grant copy_from on district to public
 \p\g
-grant select on "ingres".customer to public
+grant select on customer to public
 \p\g
-grant update on "ingres".customer to public
+grant update on customer to public
 \p\g
-grant delete on "ingres".customer to public
+grant delete on customer to public
 \p\g
-grant insert on "ingres".customer to public
+grant insert on customer to public
 \p\g
-grant references on "ingres".customer to public
+grant references on customer to public
 \p\g
-grant copy_into on "ingres".customer to public
+grant copy_into on customer to public
 \p\g
-grant copy_from on "ingres".customer to public
+grant copy_from on customer to public
 \p\g
-grant select on "ingres".order_line to public
+grant select on order_line to public
 \p\g
-grant update on "ingres".order_line to public
+grant update on order_line to public
 \p\g
-grant delete on "ingres".order_line to public
+grant delete on order_line to public
 \p\g
-grant insert on "ingres".order_line to public
+grant insert on order_line to public
 \p\g
-grant references on "ingres".order_line to public
+grant references on order_line to public
 \p\g
-grant copy_into on "ingres".order_line to public
+grant copy_into on order_line to public
 \p\g
-grant copy_from on "ingres".order_line to public
+grant copy_from on order_line to public
 \p\g
-grant select on "ingres".history to public
+grant select on history to public
 \p\g
-grant update on "ingres".history to public
+grant update on history to public
 \p\g
-grant delete on "ingres".history to public
+grant delete on history to public
 \p\g
-grant insert on "ingres".history to public
+grant insert on history to public
 \p\g
-grant references on "ingres".history to public
+grant references on history to public
 \p\g
-grant copy_into on "ingres".history to public
+grant copy_into on history to public
 \p\g
-grant copy_from on "ingres".history to public
+grant copy_from on history to public
 \p\g
-grant select on "ingres".warehouse to public
+grant select on warehouse to public
 \p\g
-grant update on "ingres".warehouse to public
+grant update on warehouse to public
 \p\g
-grant delete on "ingres".warehouse to public
+grant delete on warehouse to public
 \p\g
-grant insert on "ingres".warehouse to public
+grant insert on warehouse to public
 \p\g
-grant references on "ingres".warehouse to public
+grant references on warehouse to public
 \p\g
-grant copy_into on "ingres".warehouse to public
+grant copy_into on warehouse to public
 \p\g
-grant copy_from on "ingres".warehouse to public
+grant copy_from on warehouse to public
 \p\g
-grant select on "ingres".stock to public
+grant select on stock to public
 \p\g
-grant update on "ingres".stock to public
+grant update on stock to public
 \p\g
-grant delete on "ingres".stock to public
+grant delete on stock to public
 \p\g
-grant insert on "ingres".stock to public
+grant insert on stock to public
 \p\g
-grant references on "ingres".stock to public
+grant references on stock to public
 \p\g
-grant copy_into on "ingres".stock to public
+grant copy_into on stock to public
 \p\g
-grant copy_from on "ingres".stock to public
+grant copy_from on stock to public
 \p\g
-grant select on "ingres".order to public
+grant select on order to public
 \p\g
-grant update on "ingres".order to public
+grant update on order to public
 \p\g
-grant delete on "ingres".order to public
+grant delete on order to public
 \p\g
-grant insert on "ingres".order to public
+grant insert on order to public
 \p\g
-grant references on "ingres".order to public
+grant references on order to public
 \p\g
-grant copy_into on "ingres".order to public
+grant copy_into on order to public
 \p\g
-grant copy_from on "ingres".order to public
+grant copy_from on order to public
 \p\g
 
 	/* CONSTRAINTS */
